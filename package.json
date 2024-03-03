@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "start": "npx http-server -c-1 ."
+    "start": "http-server -c-1 ."
   },
   "jest": {
     "transform": {}
@@ -17,9 +17,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^29.6.4"
-  },
-  "dependencies": {
+    "jest": "^29.6.4",
     "http-server": "^14.1.1"
   }
 }
