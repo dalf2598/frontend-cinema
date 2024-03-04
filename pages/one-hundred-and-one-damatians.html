@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/global.css" />
+    <title>Document</title>
+    <script src="../javascript/get-movie.js" type="module"></script>
+    <script src="../javascript/constants.js" type="module"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="about-us">
+            <div class="social-media">
+                <img src="../resources/icons/facebook.png">
+                <img src="../resources/icons/twitter.png">
+                <img src="../resources/icons/instagram.png">
+            </div>
+            <div></div>
+            <div class="login">
+                <button class="sign-up">Sign Up</button>
+                <button class="log-in">Log in</button>
+            </div>
+        </nav>
+        <nav class="shop-options">
+            <img class="logo" src="../resources/images/cinemark_logo.png" />
+            <nav class="options">
+                <a href="index.html"><h3>Billboard</h3></a>
+                <a href="one-hundred-and-one-damatians.html"><h3>Movie</h3></a>
+                <h3>Theaters</h3>
+                <h3>Snackbar</h3>
+                <h3>Promotions</h3>
+            </nav>
+        </nav>
+    </header>
+
+    <div class="banner">
+        <button class="more-information">More Information</button>
+    </div>
+
+    <div class="filter">
+        <div class="city-filter">
+            <h3>You are in:</h2>
+                <select required aria-placeholder="Value2">
+                    <option value="None" hidden>None</option>
+                    <option value="value2">Value 2</option>
+                    <option value="value3">Value 3</option>
+                </select>
+        </div>
+        <div class="local-filter">
+            <h3>Theaters:</h2>
+                <select required aria-placeholder="Value2">
+                    <option value="None" hidden>None</option>
+                    <option value="value2">Value 2</option>
+                    <option value="value3">Value 3</option>
+                </select>
+        </div>
+    </div>
+
+    <h1>One Hundred and One Dalmatians</h1>
+
+    <div class="movie-card" id="movie-card">
+    </div>
+
+</body>
+<script type="module">
+    import { get_movie_by_id } from '../javascript/get-movie.js';
+    const movieId = 'tt0055254';
+
+    const convertSecondsToHHMM = (seconds) => {
+        let hours = Math.floor(seconds / 3600);
+        let minutes = Math.floor((seconds % 3600) / 60);
+        
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        
+        return hours + ':' + minutes;
+    }
+
+    const createPoster = (image) => {
+        const imageUrl = image.url;
+        const alternativeText = image.caption.plainText;
+
+        const container = document.createElement("div");
+        container.className = "movie-card-poster";
+
+        const imgElement = document.createElement("img");
+        imgElement.src = imageUrl;  
+        imgElement.alt = alternativeText;
+
+        container.appendChild(imgElement);
+
+        return container;
+    }
+
+    const createMovieDetails = (details) => {
+        const container = document.createElement("div");
+        container.className = "movie-card-details";
+
+        details.map((detail, index) => {
+            const elements = createElement(detail.key, detail.value, index !== details.length - 1);
+            elements.map((element) => container.appendChild(element));
+        });
+
+        return container;
+    }
+
+    const createElement = (title, text, slash) => {
+        const h4 = document.createElement('h4');
+        h4.textContent = title;
+        const h5 = document.createElement('h5');
+        h5.textContent = text;
+        const hr = document.createElement('hr');
+        
+        return slash ? [h4, h5, hr] : [h4, h5];
+    }
+
+    get_movie_by_id(movieId)
+        .then((movie) => {
+            const title = movie.originalTitleText.text;
+            const genres = movie.genres.genres.map((genre) => genre.text).join(', ');
+            const synopsis = movie.plot.plotText.plainText;
+            const duration = convertSecondsToHHMM(movie.runtime.seconds);
+
+            const details = [
+                { "key": "NAME", value: title },
+                { "key": "GENRES", value: genres },
+                { "key": "SINOPSIS", value: synopsis },
+                { "key": "DURATION", value: duration },
+            ];
+
+            const poster = createPoster(movie.primaryImage);
+            const movieDetails = createMovieDetails(details);
+
+            const container = document.getElementById("movie-card");
+            container.appendChild(poster);
+            container.appendChild(movieDetails);
+        });
+</script>
+<footer>
+    <div class="about-us">
+        <h2>About</h2>
+        <h3>Who are we?</h3>
+        <h3>Terms and Conditions</h3>
+    </div>
+    <div class="contact-us">
+        <h2>Contact us</h2>
+        <h3>FAQs</h3>
+    </div>
+    <div class="maketing-empresarial">
+        <h2>Marketing</h2>
+        <h3>Services</h3>
+    </div>
+    <div class="downloads">
+        <h2>Download our App</h2>
+    </div>
+    <div class="apps">
+        <img src="../resources/icons/facebook-red.png" alt="">
+        <img src="../resources/icons/twitter-red.png" alt="">
+        <img src="../resources/icons/instagram-red.png" alt="">
+    </div>
+</footer>
+
+</html>

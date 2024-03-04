@@ -2,7 +2,6 @@ body {
     margin: 0;
 }
 
-
 /* Header */
 header {
     position: relative;
@@ -68,7 +67,7 @@ nav.shop-options {
     height: 18px;
 }
 
-nav.options > h3 {
+nav.options h3 {
     padding: 0px 10px;
     color: darkred;
     font-size: small;
@@ -126,9 +125,6 @@ div.filter div select {
     width: 200px;
 }
 
-
-
-
 /* movies */
 h1 {
     width: 100%;
@@ -168,6 +164,47 @@ div.movie-list div.poster-container button{
     border-color: darkred;
 }
 
+/* Movie card */
+
+div.movie-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    align-items: center;
+    gap: 15px;
+    margin: 40px 17%;
+    padding: 2% 3% 2% 2%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 1080px) { 
+    div.movie-card {
+        grid-template-columns: 35% 65%;
+    }
+}
+
+hr {
+    border: 2px dashed #e2e2e2; 
+    width: 100%; 
+}
+
+div.movie-card div.movie-card-poster img{
+    max-width: 100%;
+    height: auto;
+}
+
+div.movie-card div.movie-card-details h4 {
+    color: black;
+    font-family: Arial;
+    font-weight: normal;
+}
+
+div.movie-card div.movie-card-details h5 {
+    color: #5c5c5c;
+    font-family: Arial;
+    font-size: medium;
+    font-weight: lighter;
+    margin: 10px 0 15px;
+}
 
 /* footer */
 footer {
